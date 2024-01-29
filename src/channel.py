@@ -7,13 +7,11 @@ from googleapiclient.discovery import build
 class Channel:
     """Класс для ютуб-канала"""
 
-    api_key = os.getenv('API-key')
-    youtube = build('youtube', 'v3', developerKey=api_key)
-
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
 
         self.__channel_id = channel_id
+        self.youtube = self.get_service()
         self.channel = self.youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
         self.title = self.channel['items'][0]['snippet']['title']
         self.description = self.channel['items'][0]['snippet']['description']
@@ -21,8 +19,6 @@ class Channel:
         self.subscriber_count = int(self.channel['items'][0]['statistics']['subscriberCount'])
         self.video_count = int(self.channel['items'][0]['statistics']['videoCount'])
         self.view_count = int(self.channel['items'][0]['statistics']['viewCount'])
-
-
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
@@ -32,12 +28,6 @@ class Channel:
     @property
     def channel_id(self):
         return self.__channel_id
-
-    @channel_id.setter
-    def channel_id(self, new_channel_id):
-        if new_channel_id:
-            print("AttributeError: property 'channel_id' of 'Channel' object has no setter")
-            self.__channel_id = self.__channel_id
 
     @classmethod
     def get_service(cls):
@@ -57,3 +47,7 @@ class Channel:
         }
         with open(file_json, 'w', encoding="utf-8") as f:
             f.write(json.dumps(json_data, ensure_ascii=False, indent=4))
+
+    @channel_id.setter
+    def channel_id(self, value):
+        self._channel_id = value
