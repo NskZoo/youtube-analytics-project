@@ -50,4 +50,65 @@ class Channel:
 
     @channel_id.setter
     def channel_id(self, value):
-        self._channel_id = value
+        self.__channel_id = value
+
+    def __str__(self):
+        return f"{self.title}, {self.url}"
+
+    def __add__(self, other):
+        """оператор сложения"""
+        if isinstance(other, Channel):
+            return int(self.subscriber_count) + int(other.subscriber_count)
+        else:
+            raise TypeError("Неподдерживаемый тип операнда для +: 'Channel' и {}".format(type(other)))
+
+    def __sub__(self, other):
+        """оператор вычитания"""
+        if isinstance(other, Channel):
+            return int(self.subscriber_count) - int(other.subscriber_count)
+        else:
+            raise TypeError("Неподдерживаемый тип операнда для -: 'Channel' и {}".format(type(other)))
+
+    def __lt__(self, other):
+        """оператор меньше (<)"""
+        if isinstance(other, Channel):
+            return int(self.subscriber_count) < int(other.subscriber_count)
+        else:
+            raise TypeError("Неподдерживаемый тип операнда для <: 'Channel' и {}".format(type(other)))
+
+    def __le__(self, other):
+        """оператор меньше или равно (<=)"""
+        if isinstance(other, Channel):
+            return int(self.subscriber_count) <= int(other.subscriber_count)
+        else:
+            raise TypeError("Неподдерживаемый тип операнда для <=: 'Channel' и {}".format(type(other)))
+
+    def __eq__(self, other):
+        """оператор равенства (==)"""
+        if isinstance(other, Channel):
+            return int(self.subscriber_count) == int(other.subscriber_count)
+        else:
+            raise TypeError("Неподдерживаемый тип операнда для ==: 'Канал' и {}".format(type(other)))
+
+    def __ne__(self, other):
+        """оператор неравенства (!=)"""
+        if isinstance(other, Channel):
+            return int(self.subscriber_count) != int(other.subscriber_count)
+        else:
+            raise TypeError("Неподдерживаемый тип операнда для !=: 'Channel' и {}".format(type(other)))
+
+    def __gt__(self, other):
+        """оператор больше (>)"""
+        if isinstance(other, Channel):
+            return int(self.subscriber_count) > int(other.subscriber_count)
+        else:
+            raise TypeError("Неподдерживаемый тип операнда для >: 'Channel' и {}".format(type(other)))
+
+    def __ge__(self, other):
+        """оператор больше
+        или равно (>=)"""
+        if isinstance(other, Channel):
+            return int(self.subscriber_count) >= int(other.subscriber_count)
+        else:
+            raise TypeError("Неподдерживаемый тип операнда для >=: 'Channel' и {}".format(type(other)))
+
